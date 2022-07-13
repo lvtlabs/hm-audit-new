@@ -1,0 +1,102 @@
+{
+	"info": {
+		"_postman_id": "50fa44bd-33dc-4419-81a4-8a617fa2a7d5",
+		"name": "HM_AUDIT_SERVER_TEST",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17131867"
+	},
+	"item": [
+		{
+			"name": "GetAuditLogs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3005/apm/v1/audit/get-audit-logs/51",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3005",
+					"path": [
+						"apm",
+						"v1",
+						"audit",
+						"get-audit-logs",
+						"51"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveAuditLogWithCreatedMethod",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \r\n    \"user_id\": 51,\r\n    \"method\": \"CREATED\",\r\n    \"description\": \"testing-new\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3005/apm/v1/audit/save-audit-log",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3005",
+					"path": [
+						"apm",
+						"v1",
+						"audit",
+						"save-audit-log"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveAuditLogWithUpdatedMethod",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user_id\": 51,\r\n    \"method\": \"UPDATED\",\r\n    \"old_value\":\"{visit_reason:10}\",\r\n    \"new_value\":\"{visit_reason:11}\",\r\n    \"description\": \"testing-new\",\r\n    \"updated_by\":\"Siraj\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3005/apm/v1/audit/save-audit-log",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3005",
+					"path": [
+						"apm",
+						"v1",
+						"audit",
+						"save-audit-log"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
