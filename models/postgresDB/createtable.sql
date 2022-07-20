@@ -12,7 +12,7 @@ CREATE SEQUENCE IF NOT EXISTS public.audit_log_audit_id_seq
 
 ALTER SEQUENCE public.audit_log_audit_id_seq
     OWNER TO postgres;
-
+    
 -- Table: public.audit_log
 
 -- DROP TABLE IF EXISTS public.audit_log;
@@ -27,6 +27,8 @@ CREATE TABLE IF NOT EXISTS public.audit_log
     description character varying COLLATE pg_catalog."default",
     created_at timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_by character varying COLLATE pg_catalog."default",
+    ip_address character varying COLLATE pg_catalog."default",
+    geo_location character varying COLLATE pg_catalog."default",
     CONSTRAINT audit_log_pkey PRIMARY KEY (audit_id)
 )
 
