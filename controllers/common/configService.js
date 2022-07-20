@@ -1,6 +1,6 @@
 var env = process.env.NODE_ENV;
 if (env == null || env == undefined) {
-	env = "prod";
+	env = "dev";
 }
 
 

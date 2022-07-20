@@ -5,7 +5,7 @@ exports.saveAuditLog = async (req,res)=>{
     console.log("body",req.body);
     if(req.body){
        try{
-            await AuditLogTbl.create_audit_log(req.body);
+            await AuditLogTbl.create_audit_log(req);
             return res.status(200).json({message:'Log Inserted !'})
        }catch(err){
             console.log('Error while inserting data', err.message);

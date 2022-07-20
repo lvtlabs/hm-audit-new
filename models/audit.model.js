@@ -6,7 +6,7 @@ const DISABLE_SEQUELIZE_DEFAULTS = {
     timestamps: false,
     freezeTableName: true,
 };
-
+const ipService = require('../services/ip.service');
 class AuditLog {
     constructor() { }
 
@@ -18,11 +18,27 @@ class AuditLog {
         new_value: { type: DataTypes.STRING },
         description: { type: DataTypes.STRING },
         created_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
-        updated_by: { type: DataTypes.STRING }
+        updated_by: { type: DataTypes.STRING },
+        ip_address:{type: DataTypes.STRING},
+        geo_location:{type: DataTypes.STRING}
     }, DISABLE_SEQUELIZE_DEFAULTS);
 
-    async create_audit_log(data) {
+    async create_audit_log(req) {
+        let data = req.body;
         console.log(data);
+        let ip_info = null;
+        if(data.method == 'LOGIN'){
+            console.log('Login Log')
+            let ipData = await ipService.get_ip_Info(req)
+            if(ipData){
+                ip_info = ipData.ipInfo ? {
+                    ip_address:ipData.ip,
+                    geo_location:`${ipData.ipInfo.country}_${ipData.ipInfo.region}_${ipData.ipInfo.city}`
+                }:null
+
+                console.log(ip_info);
+            }
+        }
         try {
             const auditRes = await this.audit_log_tbl.create({
                 user_id: data.user_id,
@@ -30,7 +46,9 @@ class AuditLog {
                 old_value: data.method == 'UPDATED' ? data.old_value : null,
                 new_value: data.method == 'UPDATED' ? data.new_value : null,
                 updated_by: data.method == 'UPDATED' ? data.updated_by : null,
-                description: data.description
+                description: data.description,
+                ip_address:ip_info?ip_info.ip_address:null,
+                geo_location:ip_info?ip_info.geo_location:null
             })
             return auditRes;
         }
